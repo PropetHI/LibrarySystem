@@ -54,10 +54,8 @@ public class LibrarySystem {
         if (findUserByName(user.getName()) == null){
             throw new UserOrBookDoesNotExistException("User does not exist");
         }
-        if (findBookByTitle(book.getTitle()) != null){
-            throw new UserOrBookDoesNotExistException("Book already exists");
-        }
         Lending lending = new Lending(user, book);
+        lendings.add(lending);
     }
     public Lending extendLending(User user, Book book, LocalDate newDueDate) throws UserOrBookDoesNotExistException{
         if (user == null){
@@ -89,16 +87,13 @@ public class LibrarySystem {
         if (findUserByName(user.getName()) == null){
             throw new UserOrBookDoesNotExistException("User does not exist");
         }
-        if (findBookByTitle(book.getTitle()) == null){
-            throw new UserOrBookDoesNotExistException("Book does not exist");
-        }
         for (Lending lending : lendings){
             if (lending.getBook().equals(book) && lending.getUser().equals(user)){
                 lendings.remove(lending);
                 return;
             }
         }
-        throw new UserOrBookDoesNotExistException("Book does not exist");
+        throw new UserOrBookDoesNotExistException("Lending does not exist");
     }
 
     }

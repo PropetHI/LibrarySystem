@@ -43,7 +43,9 @@ class LibrarySystemTest {
     @Test
     void findBookByTitle() throws Exception {
         LibrarySystem librarySystem = new LibrarySystem();
-        librarySystem.addBookWithTitleAndAuthorlist("The Hobbit", new ArrayList<Author>());
+        List<Author> authors = new ArrayList<>();
+        authors.add(new Author("J.R.R. Tolkien"));
+        librarySystem.addBookWithTitleAndAuthorlist("The Hobbit", authors);
         assertEquals("The Hobbit", librarySystem.findBookByTitle("The Hobbit").getTitle());
     }
 
@@ -58,24 +60,21 @@ class LibrarySystemTest {
     void borrowBook() throws Exception {
         LibrarySystem librarySystem = new LibrarySystem();
         librarySystem.addStudentUser("Aaron", true);
-        librarySystem.addBookWithTitleAndAuthorlist("The Hobbit", new ArrayList<Author>());
-        assertEquals("The Hobbit", librarySystem.findBookByTitle("The Hobbit").getTitle());
+        List<Author> authors = new ArrayList<>();
+        authors.add(new Author("J.R.R. Tolkien"));
+        librarySystem.addBookWithTitleAndAuthorlist("The Hobbit", authors);
+        librarySystem.borrowBook(librarySystem.findUserByName("Aaron"), librarySystem.findBookByTitle("The Hobbit"));
     }
 
-    @Test
-    void extendLending() throws Exception {
-        LibrarySystem librarySystem = new LibrarySystem();
-        librarySystem.addStudentUser("Bruh", true);
-        librarySystem.addBookWithTitleAndAuthorlist("The Hobbit", new ArrayList<Author>());
-
-
-    }
 
     @Test
     void returnBook() throws Exception {
         LibrarySystem librarySystem = new LibrarySystem();
-        librarySystem.addStudentUser("Bruh", true);
-        librarySystem.addBookWithTitleAndAuthorlist("The Hobbit", new ArrayList<Author>());
-
+        librarySystem.addStudentUser("John", true);
+        List<Author> authors = new ArrayList<>();
+        authors.add(new Author("J.R.R. Tolkien"));
+        librarySystem.addBookWithTitleAndAuthorlist("The Hobbit", authors);
+        librarySystem.borrowBook(librarySystem.findUserByName("John"), librarySystem.findBookByTitle("The Hobbit"));
+        librarySystem.returnBook(librarySystem.findUserByName("John"), librarySystem.findBookByTitle("The Hobbit"));
     }
 }
